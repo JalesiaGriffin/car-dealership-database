@@ -38,6 +38,7 @@ CREATE TABLE `vehicles` (
     `color` VARCHAR(10),
     `odometer` VARCHAR(20),
     `price` VARCHAR(20),
+    
     CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`)
 );
 
@@ -48,7 +49,42 @@ CREATE TABLE `vehicles` (
 CREATE TABLE `inventory` (
     `dealership_id` INTEGER NOT NULL,
     `vin` INTEGER NOT NULL,
+    
     CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`),
     FOREIGN KEY (`dealership_id`) REFERENCES `dealerships`(`dealership_id`),
+    FOREIGN KEY (`vin`) REFERENCES `vehicles`(`vin`)
+);
+
+
+# ---------------------------------------------------------------------- #
+# Table 3: "sales_contract"                                              #
+# ---------------------------------------------------------------------- #
+CREATE TABLE `sales_contract` (
+    `date` DATE NOT NULL,
+    `name` VARCHAR(50),
+    `email` VARCHAR(50),
+    `vin` INTEGER NOT NULL,
+    `finance` BOOLEAN,    
+    `price` INTEGER,
+    `monthly_payment` INTEGER,
+    `sales_tax` INTEGER,
+    `recording_fee` INTEGER,
+    `processing_fee` INTEGER,
+
+    CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`),
+    FOREIGN KEY (`vin`) REFERENCES `vehicles`(`vin`)
+);
+
+# ---------------------------------------------------------------------- #
+# Table 4: "sales_contract"                                              #
+# ---------------------------------------------------------------------- #
+CREATE TABLE `sales_contract` (
+    `date` DATE NOT NULL,
+    `name` VARCHAR(50),
+    `email` VARCHAR(50),
+    `vin` INTEGER NOT NULL,
+    `price` INTEGER,
+    `monthly_payment` INTEGER,
+    CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`),
     FOREIGN KEY (`vin`) REFERENCES `vehicles`(`vin`)
 );
