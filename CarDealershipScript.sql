@@ -20,7 +20,7 @@ CREATE TABLE `dealerships` (
     `name` VARCHAR(50),
     `address` VARCHAR(50),
     `phone` VARCHAR(12),
-    CONSTRAINT `PK_DEALERSHIPS` PRIMARY KEY (`dealership_id`)
+     PRIMARY KEY (`dealership_id`)
 );
 
 CREATE INDEX `name` ON `dealerships` (`name`);
@@ -39,7 +39,7 @@ CREATE TABLE `vehicles` (
     `odometer` VARCHAR(20),
     `price` VARCHAR(20),
     
-    CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`)
+    PRIMARY KEY (`vin`)
 );
 
 
@@ -50,16 +50,16 @@ CREATE TABLE `inventory` (
     `dealership_id` INTEGER NOT NULL,
     `vin` INTEGER NOT NULL,
     
-    CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`),
     FOREIGN KEY (`dealership_id`) REFERENCES `dealerships`(`dealership_id`),
     FOREIGN KEY (`vin`) REFERENCES `vehicles`(`vin`)
 );
 
 
 # ---------------------------------------------------------------------- #
-# Table 3: "sales_contract"                                              #
+# Table 4: "sales_contract"                                              #
 # ---------------------------------------------------------------------- #
 CREATE TABLE `sales_contract` (
+	`sales_contract_id` INTEGER AUTO_INCREMENT,
     `date` DATE NOT NULL,
     `name` VARCHAR(50),
     `email` VARCHAR(50),
@@ -71,20 +71,25 @@ CREATE TABLE `sales_contract` (
     `recording_fee` INTEGER,
     `processing_fee` INTEGER,
 
-    CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`),
+    PRIMARY KEY (`sales_contract_id`),
     FOREIGN KEY (`vin`) REFERENCES `vehicles`(`vin`)
 );
 
+
 # ---------------------------------------------------------------------- #
-# Table 4: "sales_contract"                                              #
+# Table 5: "lease_contract"                                              #
 # ---------------------------------------------------------------------- #
-CREATE TABLE `sales_contract` (
+CREATE TABLE `lease_contract` (
+	`lease_contract_id` INTEGER AUTO_INCREMENT,
     `date` DATE NOT NULL,
     `name` VARCHAR(50),
     `email` VARCHAR(50),
     `vin` INTEGER NOT NULL,
+    `finance` BOOLEAN,    
     `price` INTEGER,
-    `monthly_payment` INTEGER,
-    CONSTRAINT `PK_VIN` PRIMARY KEY (`vin`),
+    `expected_ending_value` INTEGER,
+    `lease_fee` INTEGER,
+
+    PRIMARY KEY (`lease_contract_id`),
     FOREIGN KEY (`vin`) REFERENCES `vehicles`(`vin`)
 );
